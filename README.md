@@ -1,3 +1,5 @@
+Demo: https://gifted-wescoff-4bb9d6.netlify.app/  
+Character information was pulled from: https://last-airbender-api.herokuapp.com/  
 Built using React.js, Tailwind CSS, and daisyUI.
 
 # Getting Started with Create React App
