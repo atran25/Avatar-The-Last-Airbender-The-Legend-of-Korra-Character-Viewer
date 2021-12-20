@@ -1,25 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react'
+import Header from './components/ui/Header';
+import CharacterGrid from './components/characters/CharacterGrid';
+import Search from './components/ui/Search';
+import axios from 'axios'
 
-function App() {
+const App = () => {
+  const [characters, setCharacters] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [query, setQuery] = useState('')
+  
+
+  useEffect(() => {
+    const fetchCharacters = async () => {
+      const result = await axios(`https://last-airbender-api.herokuapp.com/api/v1/characters?perPage=500&name=${query}`)
+      const response = await result 
+      console.log(response.data)
+      setCharacters(response.data)
+      setIsLoading(false)
+    }
+    fetchCharacters()
+  },[query])
+
+  
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container mx-auto">
+      <Header/>
+      <Search getQuery={(q) => setQuery(q)}/>
+      <CharacterGrid isLoading={isLoading} characters={characters}/>
     </div>
-  );
+  )
 }
 
 export default App;
